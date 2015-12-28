@@ -61,26 +61,26 @@ namespace hbcaUtilNET
                     return;
                 }
                 //get container
-                //const uint CRYPT_FIRST = 0x00000001;
-                //const uint PP_ENUMCONTAINERS   = 0x00000002;
-                //const uint PP_SIGNATURE_PIN = 0x00000021;
-                //const uint PP_ADMIN_PIN = 0x0000001F;
-                //const uint PP_CONTAINER = 0x00000006;
-                //const int BUFFERSIZE = 256;
-                //uint enumFlags = PP_ENUMCONTAINERS;
-                ////enumFlags = PP_SIGNATURE_PIN;
-                //StringBuilder sb = new StringBuilder(BUFFERSIZE);
-                //uint pcbData = BUFFERSIZE;
-                //uint dwFlags = 0;
-                //dwFlags = CRYPT_FIRST;
-                ////enumFlags = PP_CONTAINER;
-                //while (Win32Crypt.CryptGetProvParam(hProv, enumFlags, sb, ref pcbData, dwFlags))
-                //{
-                //    dwFlags = 0;
-                //    MessageBox.Show(sb.ToString());
-                //    tbox_result.AppendText(sb.ToString() + "\n");
-                    
-                //}
+                const uint CRYPT_FIRST = 0x00000001;
+                const uint PP_ENUMCONTAINERS = 0x00000002;
+                const uint PP_SIGNATURE_PIN = 0x00000021;
+                const uint PP_ADMIN_PIN = 0x0000001F;
+                const uint PP_CONTAINER = 0x00000006;
+                const int BUFFERSIZE = 256;
+                uint enumFlags = PP_ENUMCONTAINERS;
+                //enumFlags = PP_SIGNATURE_PIN;
+                StringBuilder sb = new StringBuilder(BUFFERSIZE);
+                uint pcbData = BUFFERSIZE;
+                uint dwFlags = 0;
+                dwFlags = CRYPT_FIRST;
+                //enumFlags = PP_CONTAINER;
+                while (Win32Crypt.CryptGetProvParam(hProv, enumFlags, sb, ref pcbData, dwFlags))
+                {
+                    dwFlags = 0;
+                    MessageBox.Show(sb.ToString());
+                    tbox_result.AppendText(sb.ToString() + "\n");
+
+                }
                 //sb = new StringBuilder(BUFFERSIZE);
                 //enumFlags = PP_ADMIN_PIN;
                 //dwFlags = 0;
@@ -200,6 +200,34 @@ namespace hbcaUtilNET
         private void btn_test_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btn_deleteContainer_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string container = "myContainer";
+                bool bCsp = Win32Crypt.CryptAcquireContext(ref hProv, container, CSPParam.HTCSPNAME, CSPParam.PROV_RSA_FULL, CSPParam.CRYPT_DELETEKEYSET);
+                MessageBox.Show(Win32Crypt.showWin32Error(Marshal.GetLastWin32Error()));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void btn_createContainer_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string container = "myContainer";
+                bool bCsp = Win32Crypt.CryptAcquireContext(ref hProv, container, CSPParam.HTCSPNAME, CSPParam.PROV_RSA_FULL, CSPParam.CRYPT_NEWKEYSET);
+                MessageBox.Show(Win32Crypt.showWin32Error(Marshal.GetLastWin32Error()));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }

@@ -267,4 +267,31 @@ namespace hbcaUtilNET
             return listProvs;
         }
     }
+    public class CSPParam
+    {
+        public const string HTCSPNAME = "HaiTai Cryptographic Service Provider 20485";
+        //ALL CSP PROVIDER
+        public const uint PROV_RSA_FULL = 0x00000001;
+        //NO PRIVATE KEY ACCESS REQUIRED
+        public const uint CRYPT_VERIFYCONTEXT = 0xF0000000;
+
+        public const uint AlogId = 0x00008004;
+
+        public const uint AT_SIGNATURE = 0x00000002;
+
+        public const uint KP_CERTIFICATE = 26;
+
+        public const uint CERT_NAME_RDN_TYPE = 2;
+
+        public const uint X509_ASN_ENCODING = 0x00000001;
+        public const uint PKCS_7_ASN_ENCODING = 0x00010000;
+
+        public const uint MY_CERT_ENCODING = X509_ASN_ENCODING | PKCS_7_ASN_ENCODING;
+
+        public const uint CERT_NAME_ISSUER_FLAG = 0;
+
+        public const uint CRYPT_DELETEKEYSET = 16;
+
+        public const uint CRYPT_NEWKEYSET = 8;
+    }
 }

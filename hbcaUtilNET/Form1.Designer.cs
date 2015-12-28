@@ -38,6 +38,8 @@
             this.button1 = new System.Windows.Forms.Button();
             this.btn_test = new System.Windows.Forms.Button();
             this.tbox_result = new System.Windows.Forms.RichTextBox();
+            this.btn_deleteContainer = new System.Windows.Forms.Button();
+            this.btn_createContainer = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -49,8 +51,8 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
@@ -96,6 +98,8 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.btn_createContainer);
+            this.splitContainer1.Panel1.Controls.Add(this.btn_deleteContainer);
             this.splitContainer1.Panel1.Controls.Add(this.btn_getCert);
             this.splitContainer1.Panel1.Controls.Add(this.btn_createHash);
             this.splitContainer1.Panel1.Controls.Add(this.button1);
@@ -105,7 +109,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.tbox_result);
             this.splitContainer1.Size = new System.Drawing.Size(621, 362);
-            this.splitContainer1.SplitterDistance = 179;
+            this.splitContainer1.SplitterDistance = 255;
             this.splitContainer1.TabIndex = 0;
             // 
             // btn_getCert
@@ -153,9 +157,29 @@
             this.tbox_result.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbox_result.Location = new System.Drawing.Point(0, 0);
             this.tbox_result.Name = "tbox_result";
-            this.tbox_result.Size = new System.Drawing.Size(438, 362);
+            this.tbox_result.Size = new System.Drawing.Size(362, 362);
             this.tbox_result.TabIndex = 0;
             this.tbox_result.Text = "";
+            // 
+            // btn_deleteContainer
+            // 
+            this.btn_deleteContainer.Location = new System.Drawing.Point(5, 214);
+            this.btn_deleteContainer.Name = "btn_deleteContainer";
+            this.btn_deleteContainer.Size = new System.Drawing.Size(75, 23);
+            this.btn_deleteContainer.TabIndex = 4;
+            this.btn_deleteContainer.Text = "删除容器";
+            this.btn_deleteContainer.UseVisualStyleBackColor = true;
+            this.btn_deleteContainer.Click += new System.EventHandler(this.btn_deleteContainer_Click);
+            // 
+            // btn_createContainer
+            // 
+            this.btn_createContainer.Location = new System.Drawing.Point(5, 185);
+            this.btn_createContainer.Name = "btn_createContainer";
+            this.btn_createContainer.Size = new System.Drawing.Size(75, 23);
+            this.btn_createContainer.TabIndex = 5;
+            this.btn_createContainer.Text = "创建容器";
+            this.btn_createContainer.UseVisualStyleBackColor = true;
+            this.btn_createContainer.Click += new System.EventHandler(this.btn_createContainer_Click);
             // 
             // Form1
             // 
@@ -190,6 +214,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btn_createHash;
         private System.Windows.Forms.Button btn_getCert;
+        private System.Windows.Forms.Button btn_deleteContainer;
+        private System.Windows.Forms.Button btn_createContainer;
     }
 }
 
