@@ -187,6 +187,12 @@ namespace hbcaUtilNET
             [MarshalAs(UnmanagedType.LPStr)] StringBuilder pbData,
             ref uint dataLength
             );
+        [DllImport("Crypt32.dll", SetLastError = true)]
+        public static extern bool CertGetCertificateContextProperty(
+            [In] IntPtr pCertContext, 
+            [In] uint dwPropId, [In, Out] 
+            IntPtr pvData, 
+            [In, Out] ref uint pcbData);
         /*
         DWORD WINAPI CertGetNameString(
         _In_  PCCERT_CONTEXT pCertContext,
@@ -246,7 +252,160 @@ namespace hbcaUtilNET
             [In] uint dwStrType, 
             [In, Out] IntPtr psz, 
             [In] uint csz);
-        public static List<string> getAllProviders()
+		/*
+		BOOL WINAPI CryptDestroyKey(
+		  _In_ HCRYPTKEY hKey
+		);*/
+		[DllImport("Advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern bool CryptDestroyKey(
+			[In] IntPtr hUserKey
+			);
+		/*
+		BOOL WINAPI CryptDestroyKey(
+		  _In_ HCRYPTKEY hKey
+		);*/
+		[DllImport("Advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern bool CryptDestroyHash(
+			[In] IntPtr hHash
+			);
+		/*
+		BOOL WINAPI CryptHashData(
+		  _In_ HCRYPTHASH hHash,
+		  _In_ BYTE       *pbData,
+		  _In_ DWORD      dwDataLen,
+		  _In_ DWORD      dwFlags
+		);
+		*/
+		[DllImport("Advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern bool CryptHashData(
+			[In] IntPtr hHash,
+			[In] byte[] pbData,
+			[In] uint dwDataLen,
+			[In] uint dwFlags
+			);
+		/*
+		BOOL WINAPI CryptSignHash(
+		  _In_    HCRYPTHASH hHash,
+		  _In_    DWORD      dwKeySpec,
+		  _In_    LPCTSTR    sDescription,
+		  _In_    DWORD      dwFlags,
+		  _Out_   BYTE       *pbSignature,
+		  _Inout_ DWORD      *pdwSigLen
+		);*/
+		[DllImport("Advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern bool CryptSignHash(
+			[In] IntPtr hHash,
+			[In] uint dwKeySpec,
+			[In] string sDescription,
+			[In] uint dwFlags,
+			[Out] byte[] pbSignature,
+			[In, Out] ref uint pbDataLen
+			);
+		/*
+		 * BOOL WINAPI CryptExportKey(
+			  _In_    HCRYPTKEY hKey,
+			  _In_    HCRYPTKEY hExpKey,
+			  _In_    DWORD     dwBlobType,
+			  _In_    DWORD     dwFlags,
+			  _Out_   BYTE      *pbData,
+			  _Inout_ DWORD     *pdwDataLen
+			);
+		 * */
+		[DllImport("Advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern bool CryptExportKey(
+			[In] IntPtr hKey,
+			[In] IntPtr hExpKey,
+			[In] uint dwBlobType,
+			[In] uint dwFlags,
+			[Out] byte[] pbData,
+			[In,Out] ref uint pdwDataLen
+			);
+		/*
+		BOOL WINAPI CryptEncrypt(
+		  _In_    HCRYPTKEY  hKey,
+		  _In_    HCRYPTHASH hHash,
+		  _In_    BOOL       Final,
+		  _In_    DWORD      dwFlags,
+		  _Inout_ BYTE       *pbData,
+		  _Inout_ DWORD      *pdwDataLen,
+		  _In_    DWORD      dwBufLen
+		);
+		 * */
+		[DllImport("Advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern bool CryptEncrypt(
+			[In] IntPtr hKey,
+			[In] IntPtr hHash,
+			[In] bool final,
+			[In] uint dwFlags,
+			[Out] byte[] pbData,
+			[In,Out] ref uint pbDataLen,
+			[In] uint dwBufLen
+			);
+		/*
+		BOOL WINAPI CryptGenKey(
+		  _In_  HCRYPTPROV hProv,
+		  _In_  ALG_ID     Algid,
+		  _In_  DWORD      dwFlags,
+		  _Out_ HCRYPTKEY  *phKey
+		);
+		 * */
+		[DllImport("Advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern bool CryptGenKey(
+			[In] IntPtr hProv,
+			[In] uint Algid,
+			[In] uint dwFlags,
+			[In,Out] ref IntPtr hKey
+			);
+		/*
+		BOOL WINAPI CryptDeriveKey(
+		  _In_    HCRYPTPROV hProv,
+		  _In_    ALG_ID     Algid,
+		  _In_    HCRYPTHASH hBaseData,
+		  _In_    DWORD      dwFlags,
+		  _Inout_ HCRYPTKEY  *phKey
+		);
+		 * */
+		[DllImport("Advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern bool CryptDeriveKey(
+			[In] IntPtr hProv,
+			[In] uint Algid,
+			[In] IntPtr hBaseData,
+			[In] uint dwFlags,
+			[In,Out] ref IntPtr hKey
+			);
+		/*
+		BOOL WINAPI CryptSetKeyParam(
+		  _In_       HCRYPTKEY hKey,
+		  _In_       DWORD     dwParam,
+		  _In_ const BYTE      *pbData,
+		  _In_       DWORD     dwFlags
+		);
+		 * */
+		[DllImport("Advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern bool CryptSetKeyParam(
+			[In] IntPtr hKey,
+			[In] uint dwParam,
+			[In] byte[] pbData,
+			[In] uint dwFlags
+			);
+		/*
+		BOOL WINAPI CryptGetKeyParam(
+		  _In_    HCRYPTKEY hKey,
+		  _In_    DWORD     dwParam,
+		  _Out_   BYTE      *pbData,
+		  _Inout_ DWORD     *pdwDataLen,
+		  _In_    DWORD     dwFlags
+		);[DllImport("Advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern bool CryptGetKeyParam(
+			[In] IntPtr hKey,
+			[In] uint dwParam,
+			[Out] byte[] pbData,
+			[In, Out] ref uint pdwDataLen,
+			[In] uint dwFlags
+			);
+		 * */
+
+		public static List<string> getAllProviders()
         {
             uint dwIndex = 0;
             uint dwType = 0,dwProvLength = 0;
@@ -270,6 +429,7 @@ namespace hbcaUtilNET
     public class CSPParam
     {
         public const string HTCSPNAME = "HaiTai Cryptographic Service Provider 20485";
+		public const string MSCSPNAME = "Microsoft Base Cryptographic Provider";
         //ALL CSP PROVIDER
         public const uint PROV_RSA_FULL = 0x00000001;
         //NO PRIVATE KEY ACCESS REQUIRED
@@ -288,10 +448,53 @@ namespace hbcaUtilNET
 
         public const uint MY_CERT_ENCODING = X509_ASN_ENCODING | PKCS_7_ASN_ENCODING;
 
-        public const uint CERT_NAME_ISSUER_FLAG = 0;
+        public const uint CERT_NAME_ISSUER_FLAG = 1;
 
         public const uint CRYPT_DELETEKEYSET = 16;
 
         public const uint CRYPT_NEWKEYSET = 8;
+
+        //证书HASH指纹
+        public const uint CERT_SHA1_HASH_PROP_ID = 3;
+		//枚举容器
+		public const uint PP_CONTAINER = 6;
+		//枚举容器
+		public const uint PP_ENUMCONTAINERS = 2;
+		//第一个
+		public const uint CRYPT_FIRST = 1;
+		//下一个
+		public const uint CRYPT_NEXT = 2;
+
+		//SHA1 算法
+		public const uint CALG_SHA1 = 0x00008004;
+
+		//公钥
+		public const uint PUBLICKEYBLOB = 6;
+		
+		public const uint ALG_TYPE_BLOCK = 1536;
+		public const uint ALG_CLASS_DATA_ENCRYPT = 24576;
+
+		//3des
+		//public const uint CALG_3DES = 0x00006603;
+		public const uint CALG_3DES = (ALG_CLASS_DATA_ENCRYPT | ALG_TYPE_BLOCK | 3);
+		//MD5
+		public const uint CALG_MD5 = 0x00008003;
+		//秘钥可被导出
+		public const uint CRYPT_EXPORTABLE = 1;
+		//
+		public const uint KP_MODE = 0x00000004;
+		//3DES CBC
+		public const byte CRYPT_MODE_CBC = 1;
+		//
+		public const uint KP_IV = 0x00000001;
+		//KP-PADDING
+		public const uint KP_PADDING = 0x00000003;
+		//PKCS5-PADDING
+		public const uint PKCS5_PADDING = 1;
+		//
+		public const uint CRYPT_MODE_ECB = 2;
+		//PLAINTEXTKEYBLOB
+		public const uint PLAINTEXTKEYBLOB = 8;
+
     }
 }

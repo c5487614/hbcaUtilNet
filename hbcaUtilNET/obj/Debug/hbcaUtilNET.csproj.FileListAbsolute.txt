@@ -1,5 +1,4 @@
 E:\app\hbcaUtilNET\hbcaUtilNET\bin\Debug\hbcaUtilNET.exe.config
-E:\app\hbcaUtilNET\hbcaUtilNET\obj\Debug\hbcaUtilNET.csprojResolveAssemblyReference.cache
 E:\app\hbcaUtilNET\hbcaUtilNET\obj\Debug\hbcaUtilNET.Form1.resources
 E:\app\hbcaUtilNET\hbcaUtilNET\obj\Debug\hbcaUtilNET.Properties.Resources.resources
 E:\app\hbcaUtilNET\hbcaUtilNET\obj\Debug\hbcaUtilNET.csproj.GenerateResource.Cache
@@ -7,3 +6,4 @@ E:\app\hbcaUtilNET\hbcaUtilNET\bin\Debug\hbcaUtilNET.exe
 E:\app\hbcaUtilNET\hbcaUtilNET\bin\Debug\hbcaUtilNET.pdb
 E:\app\hbcaUtilNET\hbcaUtilNET\obj\Debug\hbcaUtilNET.exe
 E:\app\hbcaUtilNET\hbcaUtilNET\obj\Debug\hbcaUtilNET.pdb
+E:\app\hbcaUtilNET\hbcaUtilNET\obj\Debug\hbcaUtilNET.csprojResolveAssemblyReference.cache
