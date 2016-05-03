@@ -284,6 +284,23 @@ namespace hbcaUtilNET
 			[In] uint dwFlags
 			);
 		/*
+		BOOL WINAPI CryptGetHashParam(
+		  _In_    HCRYPTHASH hHash,
+		  _In_    DWORD      dwParam,
+		  _Out_   BYTE       *pbData,
+		  _Inout_ DWORD      *pdwDataLen,
+		  _In_    DWORD      dwFlags
+		);
+		 */
+		[DllImport("Advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+		public static extern bool CryptGetHashParam(
+			[In] IntPtr hHash,
+			[In] uint dwParam,
+			[Out] byte[] pbData,
+			[In,Out] ref uint dwDataLen,
+			[In] uint dwFlags
+			);
+		/*
 		BOOL WINAPI CryptSignHash(
 		  _In_    HCRYPTHASH hHash,
 		  _In_    DWORD      dwKeySpec,
@@ -432,6 +449,7 @@ namespace hbcaUtilNET
 		public const string MSCSPNAME = "Microsoft Base Cryptographic Provider";
         //ALL CSP PROVIDER
         public const uint PROV_RSA_FULL = 0x00000001;
+		public const uint PROV_RSA_AES = 24;
         //NO PRIVATE KEY ACCESS REQUIRED
         public const uint CRYPT_VERIFYCONTEXT = 0xF0000000;
 
@@ -468,6 +486,13 @@ namespace hbcaUtilNET
 		//SHA1 算法
 		public const uint CALG_SHA1 = 0x00008004;
 
+		//SHA256 算法
+		public const uint CALG_SHA256 = 0x0000800c;
+
+		public const uint ALG_CLASS_HASH = 32768;
+		public const uint ALG_TYPE_ANY = 0;
+		public const uint ALG_SID_SHA = 4;
+		public const uint CALG_SHA1TEST = (ALG_CLASS_HASH | ALG_TYPE_ANY | ALG_SID_SHA);
 		//公钥
 		public const uint PUBLICKEYBLOB = 6;
 		
@@ -495,6 +520,11 @@ namespace hbcaUtilNET
 		public const uint CRYPT_MODE_ECB = 2;
 		//PLAINTEXTKEYBLOB
 		public const uint PLAINTEXTKEYBLOB = 8;
+
+		//HASH SIZE
+		public const uint HP_HASHSIZE = 4;
+		//HASH VALUE
+		public const uint HP_HASHVAL = 2;
 
     }
 }

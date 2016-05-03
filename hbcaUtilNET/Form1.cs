@@ -721,5 +721,88 @@ namespace hbcaUtilNET
 				MessageBox.Show(ex.ToString());
 			}
 		}
+
+        private void btn_hash_sha1_Click(object sender, EventArgs e)
+        {
+            string data = "ChunhuiChen";
+            byte[] bDatas = System.Text.Encoding.UTF8.GetBytes(data);
+            try
+            {
+                IntPtr hProv = IntPtr.Zero;
+				bool bSucc = Win32Crypt.CryptAcquireContext(ref hProv, null, null, CSPParam.PROV_RSA_AES, CSPParam.CRYPT_VERIFYCONTEXT);
+                if (bSucc)
+                {
+                    IntPtr hHash = IntPtr.Zero;
+					bSucc = Win32Crypt.CryptCreateHash(hProv, CSPParam.CALG_SHA256, IntPtr.Zero, 0, ref hHash);
+                    if (bSucc)
+                    {
+                        bSucc = Win32Crypt.CryptHashData(hHash, bDatas, (uint)bDatas.Length, 0);
+                        if (bSucc)
+                        {
+							uint uHashSize = 0;
+							uint uHash = 20;
+							bSucc = Win32Crypt.CryptGetHashParam(hHash, CSPParam.HP_HASHSIZE, null, ref uHashSize, 0);
+							if (bSucc)
+							{
+								byte[] hashData = new byte[uHash];
+								bSucc = Win32Crypt.CryptGetHashParam(hHash, CSPParam.HP_HASHVAL, hashData, ref uHash, 0);
+								if (bSucc)
+								{
+									
+									string result = Convert.ToBase64String(hashData);
+									result = BitConverter.ToString(hashData);
+									MessageBox.Show(result);
+								}
+								else
+								{
+									MessageBox.Show("CryptGetHashParam失败。");
+									MessageBox.Show(Win32Crypt.showWin32Error(Marshal.GetLastWin32Error()));
+								}
+							}
+							else
+							{
+								MessageBox.Show("CryptGetHashParam失败。");
+								Win32Crypt.showWin32Error(Marshal.GetLastWin32Error());
+							}
+                        }
+                        else
+                        {
+							MessageBox.Show("CryptHashData失败。");
+                            Win32Crypt.showWin32Error(Marshal.GetLastWin32Error());
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("获取HASH句柄失败。");
+                        Win32Crypt.showWin32Error(Marshal.GetLastWin32Error());
+                    }
+                    if (hHash != IntPtr.Zero)
+                    {
+						if (!Win32Crypt.CryptDestroyHash(hHash))
+                        {
+                            MessageBox.Show("释放HASH句柄失败。");
+                            Win32Crypt.showWin32Error(Marshal.GetLastWin32Error());
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("获取CSP句柄失败。");
+                    Win32Crypt.showWin32Error(Marshal.GetLastWin32Error());
+                }
+                if (hProv != IntPtr.Zero)
+                {
+                    if (!Win32Crypt.CryptReleaseContext(hProv, 0))
+                    {
+                        MessageBox.Show("释放CSP句柄失败。");
+                        Win32Crypt.showWin32Error(Marshal.GetLastWin32Error());
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
     }
 }
