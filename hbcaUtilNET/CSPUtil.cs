@@ -309,7 +309,7 @@ namespace hbcaUtilNET
 		  _Out_   BYTE       *pbSignature,
 		  _Inout_ DWORD      *pdwSigLen
 		);*/
-		[DllImport("Advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+		[DllImport("Advapi32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
 		public static extern bool CryptSignHash(
 			[In] IntPtr hHash,
 			[In] uint dwKeySpec,
@@ -525,6 +525,7 @@ namespace hbcaUtilNET
 		public const uint HP_HASHSIZE = 4;
 		//HASH VALUE
 		public const uint HP_HASHVAL = 2;
+		public const uint CRYPT_NOHASHOID = 0x00000001;
 
     }
 }

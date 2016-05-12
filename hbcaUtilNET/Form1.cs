@@ -438,10 +438,34 @@ namespace hbcaUtilNET
 						bSucc = Win32Crypt.CryptCreateHash(hProv, CSPParam.CALG_SHA1, hUserKey, 0, ref hHash);
 						if (bSucc)
 						{
-							byte[] pbData = System.Text.Encoding.UTF8.GetBytes("12345");
+							byte[] pbData = System.Text.Encoding.UTF8.GetBytes("ChunhuiChen");
 							bSucc = Win32Crypt.CryptHashData(hHash, pbData, (uint)pbData.Length, 0);
 							if (bSucc)
 							{
+								//uint uHashSize = 0;
+								//bSucc = Win32Crypt.CryptGetHashParam(hHash, CSPParam.HP_HASHSIZE, null, ref uHashSize, 0);
+								//if (bSucc)
+								//{
+								//	uint uHash = 20;
+								//	byte[] hashData = new byte[uHash];
+
+								//	bSucc = Win32Crypt.CryptGetHashParam(hHash, CSPParam.HP_HASHVAL, hashData, ref uHash, 0);
+								//	if (bSucc)
+								//	{
+
+								//		string result = Convert.ToBase64String(hashData);
+								//		result = BitConverter.ToString(hashData);
+								//		MessageBox.Show(result);
+								//	}
+								//	else
+								//	{
+								//		MessageBox.Show("CryptGetHashParam失败。");
+								//		MessageBox.Show(Win32Crypt.showWin32Error(Marshal.GetLastWin32Error()));
+								//	}
+								//}
+								//else
+								//{
+								//}
 								pbDataLen = 0;
 								bSucc = Win32Crypt.CryptSignHash(hHash, CSPParam.AT_SIGNATURE, null, 0, null, ref pbDataLen);
 								if (bSucc)
@@ -450,7 +474,11 @@ namespace hbcaUtilNET
 									bSucc = Win32Crypt.CryptSignHash(hHash, CSPParam.AT_SIGNATURE, null, 0, pbSignature, ref pbDataLen);
 									if (bSucc)
 									{
+										//byte[] array = pbSignature.ToArray();
+										Array.Reverse(pbSignature);
+										//string result = BitConverter.ToString(pbSignature);
 										tbox_result.Text = Convert.ToBase64String(pbSignature);
+										//tbox_result.Text = result;
 										//MessageBox.Show("签名成功");
 									}
 									else
